@@ -1,0 +1,122 @@
+#include <iostream>
+#include <strings.h>
+#include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <pthread.h>
+#include <semaphore.h>
+#include <main.h>
+#include <Item.h>
+using namespace std;
+
+const int BUFFER_SIZE = 1;
+Item buffer[BUFFER_SIZE];
+sem_t empty;
+sem_t used;
+sem_t Alfalfa_sem;
+sem_t Darla_sem;
+sem_t Spanky_sem;
+void *consumer(void *param)
+{
+  int remove = 0;
+  sem_t sema = *((sem_t*)param);
+  while(true)
+    {
+      //create spce for local copy of item
+      Item next;
+      
+      //critical section
+      sem_wait(&sema); // <--subtract one from sem of child // blook if it is 0
+      next = buffer[remove];
+      if(next.food == "jimmies")
+	{cout << pthread_self() << endl;
+	  cout << "Spanky: Now I can eat" << endl;
+	  sem_post(&empty);// add one to count of empty
+	  remove = (remove + 1) % BUFFER_SIZE;
+	  cout << endl;
+	}
+      else if(next.food == "ice cream")
+	{cout << pthread_self() << endl;
+	  cout << "Alfalfa: Now I can eat" << endl;
+	  sem_post(&empty);// add one to count of empty
+	  remove = (remove + 1) % BUFFER_SIZE;
+	  cout << endl;
+	}
+      else if(next.food == "chocolate sauce")
+	{cout << pthread_self() << endl;
+	  cout << "Darla: Now I can eat" << endl;
+	  sem_post(&empty);// add one to count of empty
+	  remove = (remove + 1) % BUFFER_SIZE;
+	  cout << endl;
+	}
+      
+
+
+
+
+      
+      //critical section
+            
+      //goto next item in the buffer w/ wrap around
+      
+      
+    }
+  pthread_exit(0);
+}
+int main(void)
+{
+  sem_init(&empty,0,BUFFER_SIZE);
+  sem_init(&Spanky_sem,0,0);
+  sem_init(&Alfalfa_sem,0,0);
+  sem_init(&Darla_sem,0,0);
+  pthread_t Spanky,Alfalfa,Darla;
+  int a = 1;
+  int b = 2;
+  int c = 3;
+  pthread_create(&Spanky,NULL,consumer,&Spanky_sem);
+  pthread_create(&Alfalfa,NULL,consumer,&Alfalfa_sem);
+  pthread_create(&Darla,NULL,consumer,&Darla_sem);
+ 
+  int count = 0;
+  int add = 0;
+  while(true)
+    {
+     //create a new item to put in shared memory
+      Item next;
+      
+      //begin critical section
+      sem_wait(&empty); // if empty = 0 wait and subtract one from empty
+      buffer[add] = next;
+      if(next.food == "jimmies")
+	{
+	  cout << "here" << endl;
+	  sem_post(&Spanky_sem);
+	}
+      else if(next.food == "ice cream")
+	{
+	  cout << "here1" << endl;
+	  sem_post(&Alfalfa_sem);
+	}
+      else if(next.food == "chocolate sauce")
+	{
+	  cout << "here2" << endl;
+	  sem_post(&Darla_sem);
+	}
+      // sem_post(&used); // <-- adds one to used 
+      //end critical section
+      
+      add = (add + 1) % BUFFER_SIZE;
+      
+      //debugging
+      count++;
+      
+      cout << next.toString() << endl;
+      sleep(1);
+    }
+  sem_destroy(&empty);
+  sem_destroy(&Alfalfa_sem);
+  sem_destroy(&Darla_sem);
+  sem_destroy(&Spanky_sem);
+  
+  return 1;
+}

@@ -1,0 +1,109 @@
+#include <iostream>
+#include <pthread.h>
+#include <unistd.h>
+#include <SafeQueue.cpp>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+using namespace std;
+
+const int BUFFER_SIZE = 10000;
+pthread_mutex_t locked;
+SafeQueue<int> list[BUFFER_SIZE];
+int count = 0;
+int primes = 0;
+int nums[BUFFER_SIZE];
+int primenumbers[BUFFER_SIZE];
+pthread_t tid[BUFFER_SIZE];
+void* createarray1(void* lists)
+{
+  cout << "Computing sequence of natural numbers starting from 2" << endl;
+  int y =2;
+  while(primes < count)
+    {
+      if(y < BUFFER_SIZE)
+	{
+	  nums[y-2] = 0;
+	}
+      ((SafeQueue<int>*)lists)->push(y);
+      y++;
+    }
+  pthread_exit(0);
+}
+void* filtering(void* lists)
+{
+  if(count == primes)
+    {
+      exit(0);
+    }
+  //cout << ((SafeQueue<int>*)lists)->peek() << endl;
+  cout << "#"<<primes+1<<"Filtering the number: " << ((SafeQueue<int>*)lists)->peek() << endl;
+  primenumbers[primes] = ((SafeQueue<int>*)lists)->peek();
+  int filternum = ((SafeQueue<int>*)lists)->peek();
+  bool first = true;
+  int starting_num;
+  int num = primes;
+  do
+    {
+      starting_num = ((SafeQueue<int>*)lists)->pop();
+      //cout <<"Thread "<<filternum << ": " <<starting_num << endl;
+      if(starting_num%filternum != 0)
+	{
+	  if(first)
+	    {
+	      primes++;
+	      num++;
+	      // nums[primes] = ((SafeQueue<int>*)lists)->peek();
+ 	      list[num].push(starting_num);
+	      pthread_create(&tid[primes],NULL,filtering,&list[num]);
+	      //pthread_join(tid[primes],NULL);
+	      first = false;
+ 
+	    }
+	  else
+	    {
+	      list[num].push(starting_num);
+	    }
+	}
+      
+    }while(primes < count);
+  exit(0);
+  // cout << "list.peek()" << nums[primes] << endl;
+  // pthread_mutex_unlock(&locked);
+  pthread_exit(0);
+  
+}
+
+
+int main(void)
+{
+  pthread_t createarray, filter;
+  cout << "Enter N" << endl;
+  int N;
+  cin >> count;
+  int n1 = 2;
+  /*cout << "Computing sequence of natural numbers starting from 2" << endl;
+  int y =2;
+  
+  for(int i = 0; i < BUFFER_SIZE; i++)
+    {
+      
+      nums[i] = 0;
+    }
+  for(int i = 2; i < BUFFER_SIZE; i++)
+   {
+      list[primes].push(i);
+    }
+  */
+
+  pthread_create(&createarray,NULL,createarray1,&list[primes]);
+  //pthread_join(createarray,NULL);
+  pthread_create(&filter,NULL,filtering,&list[primes]);
+ 
+  pthread_join(filter,NULL);
+  
+  
+}

@@ -1,0 +1,256 @@
+Starting Array
+20 20 20 20 20 20 20 20 20 20 
+20 20 20 20 20 20 20 20 20 20 
+20 20 0 20 20 20 20 20 20 20 
+20 20 20 20 20 20 20 20 20 20 
+20 20 20 20 20 20 20 20 20 20 
+20 20 20 20 20 40 20 20 20 20 
+20 20 20 20 20 20 20 20 20 20 
+20 20 20 20 20 20 20 0 20 20 
+20 20 20 20 20 20 20 20 20 20 
+20 20 20 20 20 20 20 20 20 20 
+ 
+Max Delta10
+ 
+Max Delta4.1625
+ 
+Max Delta1.99156
+ 
+Max Delta1.08966
+ 
+Max Delta0.668114
+ 
+Max Delta0.447341
+ 
+Max Delta0.319517
+ 
+Max Delta0.239173
+ 
+Max Delta0.185332
+ 
+Max Delta0.147442
+ 
+Max Delta0.119764
+ 
+Max Delta0.0989488
+ 
+Max Delta0.0829286
+ 
+Max Delta0.07036
+ 
+Max Delta0.0603371
+ 
+Max Delta0.0522293
+ 
+Max Delta0.0455862
+ 
+Max Delta0.0400798
+ 
+Max Delta0.0354668
+ 
+Max Delta0.0315643
+ 
+Max Delta0.0282332
+ 
+Max Delta0.0253662
+ 
+Max Delta0.024319
+ 
+Max Delta0.0238509
+ 
+Max Delta0.0232531
+ 
+Max Delta0.0225632
+ 
+Max Delta0.0218106
+ 
+Max Delta0.021018
+ 
+Max Delta0.0202032
+ 
+Max Delta0.0193799
+ 
+Max Delta0.0185586
+ 
+Max Delta0.0177471
+ 
+Max Delta0.0169514
+ 
+Max Delta0.0161767
+ 
+Max Delta0.0156524
+ 
+Max Delta0.0151285
+ 
+Max Delta0.0146086
+ 
+Max Delta0.0140956
+ 
+Max Delta0.0135917
+ 
+Max Delta0.0130986
+ 
+Max Delta0.0126176
+ 
+Max Delta0.0121496
+ 
+Max Delta0.0116954
+ 
+Max Delta0.0112553
+ 
+Max Delta0.0108297
+ 
+Max Delta0.0104187
+ 
+Max Delta0.0100222
+ 
+Max Delta0.00964005
+ 
+Max Delta0.00927212
+ 
+Max Delta0.00891812
+ 
+Max Delta0.00857773
+ 
+Max Delta0.00825061
+ 
+Max Delta0.00793638
+ 
+Max Delta0.00763464
+ 
+Max Delta0.00734497
+ 
+Max Delta0.00706697
+ 
+Max Delta0.00680021
+ 
+Max Delta0.00654428
+ 
+Max Delta0.00629875
+ 
+Max Delta0.00606324
+ 
+Max Delta0.00583733
+ 
+Max Delta0.00562064
+ 
+Max Delta0.00541278
+ 
+Max Delta0.0052134
+ 
+Max Delta0.00502213
+ 
+Max Delta0.00483864
+ 
+Max Delta0.00466259
+ 
+Max Delta0.00449366
+ 
+Max Delta0.00433155
+ 
+Max Delta0.00417597
+ 
+Max Delta0.00402663
+ 
+Max Delta0.00388326
+ 
+Max Delta0.00374561
+ 
+Max Delta0.00361342
+ 
+Max Delta0.00348647
+ 
+Max Delta0.00336452
+ 
+Max Delta0.00324736
+ 
+Max Delta0.00313479
+ 
+Max Delta0.0030266
+ 
+Max Delta0.00292261
+ 
+Max Delta0.00282264
+ 
+Max Delta0.00272652
+ 
+Max Delta0.00263408
+ 
+Max Delta0.00254517
+ 
+Max Delta0.00245964
+ 
+Max Delta0.00237735
+ 
+Max Delta0.00229815
+ 
+Max Delta0.00222193
+ 
+Max Delta0.00214855
+ 
+Max Delta0.0020779
+ 
+Max Delta0.00200987
+ 
+Max Delta0.00194434
+ 
+Max Delta0.00188123
+ 
+Max Delta0.00182042
+ 
+Max Delta0.00176182
+ 
+Max Delta0.00170535
+ 
+Max Delta0.00165092
+ 
+Max Delta0.00159844
+ 
+Max Delta0.00154784
+ 
+Max Delta0.00149905
+ 
+Max Delta0.00145199
+ 
+Max Delta0.00140659
+ 
+Max Delta0.00136279
+ 
+Max Delta0.00132053
+ 
+Max Delta0.00127974
+ 
+Max Delta0.00124037
+ 
+Max Delta0.00120237
+ 
+Max Delta0.00116568
+ 
+Max Delta0.00113025
+ 
+Max Delta0.00109603
+ 
+Max Delta0.00106298
+ 
+Max Delta0.00103105
+ 
+Max Delta0.0010002
+ 
+Max Delta0.000970398
+_____________End Simulation____________
+ 
+ 
+19.7314 19.7329 19.7374 19.7443 19.7527 19.7616 19.7699 19.7768 19.7813 19.7831 
+19.7329 19.7345 19.7389 19.7456 19.7537 19.7623 19.7704 19.777 19.7814 19.7831 
+19.7374 19.7389 19.7428 19.7489 19.7562 19.7639 19.7711 19.7769 19.7809 19.7824 
+19.7443 19.7456 19.7489 19.7538 19.7598 19.7661 19.7719 19.7767 19.7799 19.7811 
+19.7527 19.7537 19.7562 19.7598 19.7641 19.7687 19.7729 19.7763 19.7785 19.7794 
+19.7616 19.7623 19.7639 19.7661 19.7687 19.7713 19.7737 19.7757 19.7769 19.7774 
+19.7699 19.7704 19.7711 19.7719 19.7729 19.7737 19.7744 19.775 19.7753 19.7755 
+19.7768 19.777 19.7769 19.7767 19.7763 19.7757 19.775 19.7744 19.774 19.7739 
+19.7813 19.7814 19.7809 19.7799 19.7785 19.7769 19.7753 19.774 19.7731 19.7728 
+19.7831 19.7831 19.7824 19.7811 19.7794 19.7774 19.7755 19.7739 19.7728 19.7724 
+The maximum delta across the cells is: 0.000970398
+The average temperature across the cells is: 19
+CPU time used: 2216 ms
+Estimate of number of FLOPS 2716.25
