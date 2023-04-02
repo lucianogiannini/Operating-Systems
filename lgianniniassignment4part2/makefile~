@@ -1,0 +1,9 @@
+CC = g++
+CPPFLAGS = -I.
+LDFLAGS = -Wl,--no-as-needed -lmm
+main: main.o Item.o
+main.o: main.cpp main.h
+Item.o: Item.cpp Item.h
+clean:
+	rm *.o
+	rm main

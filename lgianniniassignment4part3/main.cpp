@@ -1,0 +1,139 @@
+#include <iostream>
+#include <stdlib.h>
+#include <strings.h>
+#include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <pthread.h>
+#include <semaphore.h>
+#include <main.h>
+#include <Item.h>
+using namespace std;
+
+char *database[100];
+
+sem_t writer1;
+sem_t reader1;
+sem_t go_sem;
+bool go = false;
+
+void initializeDB()
+{
+  for(int i =0; i < 100; i++)
+    {
+      database[i] = NULL;
+    }
+}
+char* readDB()
+{
+  // if rc 0->1 then we are the first reader into the critical section
+  // if rc > 1 then there are other readers in the critical section
+  sem_wait(&reader1);
+  char* result;
+  if(database[0] !=NULL)
+    {
+      result = strdup(database[0]);
+    }
+  else
+    {
+      result = NULL;
+    }
+  //if rc 1->0 we are the last reader to leave the critical section
+  //if rc is anything else we are not the last reader
+  sem_wait(&go_sem);
+  if(!go)
+    {
+      sem_post(&writer1);
+    }
+  else
+    {
+      sem_post(&reader1);
+    }
+  sem_post(&go_sem);
+  return result;
+}
+
+void writeDB(char *data)
+{
+  sem_wait(&go_sem);
+  go = false;
+  sem_post(&go_sem);
+  sem_wait(&writer1);
+  if(database[0] != NULL)
+    {
+      delete database[0];
+      database[0] = NULL;
+    }
+  cout << "writer: " << data << endl;
+  database[0] = data;
+ 
+  sem_post(&reader1);
+  sem_wait(&go_sem);
+  go = true;
+  sem_post(&go_sem);
+  sleep(.1); 
+    
+}
+void useData(char *data, int id)
+{
+  if(data!=NULL)
+    {
+      cout <<id <<" reader: " << data << endl;
+    }
+  else
+    {
+      cout << "reader: race condiiton!!!" << endl;
+    }
+}
+char* createData()
+{
+  
+  char *result = new char[4];
+  result[0] = 'A' + rand() % 26;
+  result[1] = 'A' + rand() % 26;
+  result[2] = 'A' + rand() % 26;
+  result[3] = '\0';
+  return result;
+}
+void *reader(void *param)
+{
+  while(true)
+    {
+      char *data = readDB();
+      useData(data,*((int*)param));
+      sleep(.01);
+    }
+}
+void *writer(void *param)
+{
+  while(true)
+    {
+      char *data = createData();
+      writeDB(data);
+    }
+}
+int main(void)
+{
+  cout << "Please enter the number of readers you would like: " << endl;
+  int n;
+  cin >> n;
+  srand(time(0));
+  initializeDB();
+  sem_init(&writer1,0,1);
+  sem_init(&go_sem,0,1);
+  sem_init(&reader1,0,0);
+  pthread_t reader_pthreads[n];
+  for(int i = 0; i < n; i ++)
+    {
+      pthread_create(&reader_pthreads[i],NULL,reader,new int(i));
+    }
+
+  pthread_t writer0;
+  pthread_create(&writer0,NULL,writer,NULL);
+  for(int i=0; i < n; i++)
+    {
+      pthread_join(reader_pthreads[i],NULL);
+    }
+  
+  return 1;
+}
