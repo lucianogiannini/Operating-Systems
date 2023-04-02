@@ -1,0 +1,12 @@
+CC = g++
+CPPFLAGS = -I.
+LDFLAGS = -Wl,--no-as-needed -lcrypt
+all: main client
+main: main.o
+main.o: main.cpp
+client: client.o
+client.o: client.cpp
+clean:
+	rm *.o
+	rm main
+	rm client

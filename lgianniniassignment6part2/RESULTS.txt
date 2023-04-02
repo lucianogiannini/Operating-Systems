@@ -1,0 +1,5 @@
+server sent ->  userid:
+I sent -> lgiannini
+server sent ->  password:
+I sent -> fountain
+server sent ->  [lgiannini/fountain] valid password
