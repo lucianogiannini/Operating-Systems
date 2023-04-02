@@ -1,0 +1,15 @@
+#include <Resource.h>
+#include <sstream>
+#include <stdlib.h>
+
+
+Resource::Resource()
+{
+  token = "";
+  used = false;
+}
+Item::Item(string f)
+{
+  token = f;
+  used = false;
+}

@@ -1,0 +1,87 @@
+0 2 1 3 5 4 6 3 7 4 7 3 3 5 5 3 1 1 1 7 2 3 4 1
+
+FIFO Algorithm
+Page Frames: 0 Page Fault!
+Page Frames: 0 2 Page Fault!
+Page Frames: 0 2 1 Page Fault!
+Page Frames: 0 2 1 3 Page Fault!
+Page Frames: 2 1 3 5 Page Fault!
+Page Frames: 1 3 5 4 Page Fault!
+Page Frames: 3 5 4 6 Page Fault!
+Page Frames: 3 5 4 6 
+Page Frames: 5 4 6 7 Page Fault!
+Page Frames: 5 4 6 7 
+Page Frames: 5 4 6 7 
+Page Frames: 4 6 7 3 Page Fault!
+Page Frames: 4 6 7 3 
+Page Frames: 6 7 3 5 Page Fault!
+Page Frames: 6 7 3 5 
+Page Frames: 6 7 3 5 
+Page Frames: 7 3 5 1 Page Fault!
+Page Frames: 7 3 5 1 
+Page Frames: 7 3 5 1 
+Page Frames: 7 3 5 1 
+Page Frames: 3 5 1 2 Page Fault!
+Page Frames: 3 5 1 2 
+Page Frames: 5 1 2 4 Page Fault!
+Page Frames: 5 1 2 4 
+Page Faults: 13
+
+LRU Algorithm
+Page Frames: 0 Page Fault!
+Page Frames: 0 2 Page Fault!
+Page Frames: 0 2 1 Page Fault!
+Page Frames: 0 2 1 3 Page Fault!
+Page Frames: 2 1 3 5 Page Fault!
+Page Frames: 1 3 5 4 Page Fault!
+Page Frames: 3 5 4 6 Page Fault!
+Page Frames: 5 4 6 3 
+Page Frames: 4 6 3 7 Page Fault!
+Page Frames: 6 3 7 4 
+Page Frames: 6 3 4 7 
+Page Frames: 6 4 7 3 
+Page Frames: 6 4 7 3 
+Page Frames: 4 7 3 5 Page Fault!
+Page Frames: 4 7 3 5 
+Page Frames: 4 7 5 3 
+Page Frames: 7 5 3 1 Page Fault!
+Page Frames: 7 5 3 1 
+Page Frames: 7 5 3 1 
+Page Frames: 5 3 1 7 
+Page Frames: 3 1 7 2 Page Fault!
+Page Frames: 1 7 2 3 
+Page Frames: 7 2 3 4 Page Fault!
+Page Frames: 2 3 4 1 Page Fault!
+Page Faults: 13
+
+Optimal Algorithm
+Page Frames: 0 Page Fault!
+Page Frames: 0 2 Page Fault!
+Page Frames: 0 2 1 Page Fault!
+Page Frames: 0 2 1 3 Page Fault!
+Page Frames: 2 1 3 5 Page Fault!
+Page Frames: 1 3 5 4 Page Fault!
+Page Frames: 3 5 4 6 Page Fault!
+Page Frames: 3 5 4 6 
+Page Frames: 3 5 4 7 Page Fault!
+Page Frames: 3 5 4 7 
+Page Frames: 3 5 4 7 
+Page Frames: 3 5 4 7 
+Page Frames: 3 5 4 7 
+Page Frames: 3 5 4 7 
+Page Frames: 3 5 4 7 
+Page Frames: 3 5 4 7 
+Page Frames: 3 4 7 1 Page Fault!
+Page Frames: 3 4 7 1 
+Page Frames: 3 4 7 1 
+Page Frames: 3 4 7 1 
+Page Frames: 3 4 1 2 Page Fault!
+Page Frames: 3 4 1 2 
+Page Frames: 3 4 1 2 
+Page Frames: 3 4 1 2 
+Page Faults: 10
+
+FIFO and LRU both have 13 page faults.
+The optimal has only 10 page faults.
+
+Since each algorithm is based on the output for them to run their idea cases, FIFO and LRU in this case were the same. The optimal should always have the smallest number of page faults.

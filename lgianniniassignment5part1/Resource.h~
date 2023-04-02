@@ -1,0 +1,12 @@
+#include <string>
+using namespace std;
+
+class Resource
+{
+ public:
+  string token;
+  bool used;
+  Item();
+  Item(string f);
+  
+};

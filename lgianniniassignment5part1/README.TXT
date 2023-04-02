@@ -1,0 +1,1 @@
+So this problem works for input file 1 and 2. When you use one just change the "input.txt" to "intput2.txt" This file does run and work properly but does take some time to find a permutation that works. If you run it and leave for like 5 min it will find a couple of permutations to check.

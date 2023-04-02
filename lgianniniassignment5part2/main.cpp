@@ -1,0 +1,94 @@
+#include <iostream>
+#include <strings.h>
+#include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <pthread.h>
+#include <main.h>
+#include <stdio.h>
+#include <iomanip>
+#include <fstream>
+#include <sstream>
+#include <unistd.h>
+#include <chrono>
+#include <sched.h>
+typedef std::chrono::high_resolution_clock Clock;
+
+using namespace std;
+int pid;
+int ctxt;
+void *method(void *param)
+{
+  for(int i = 0; i < 2000000000; i++)
+    {
+      int p = 1000;
+      int a = p*100;
+      int c = a/10;
+      int d = (d+10)*10;
+    }
+  //  timespec ts;
+  //cout <<"sched_rr_get_interval " <<sched_rr_get_interval(getpid(),&ts) << endl;
+  
+}
+int main(void)
+{
+  ifstream in;
+  auto start_time = Clock::now();
+  pthread_t tid;
+  pthread_create(&tid,NULL,method,NULL);
+  //pthread_join(tid,NULL);
+   pthread_t tid1;
+  pthread_create(&tid1,NULL,method,NULL);
+  //pthread_join(tid1,NULL);
+  // pthread_t tid2;
+  //pthread_create(&tid2,NULL,method,NULL);
+  
+  for(int i = 0; i < 2000000000; i++)
+    {
+    
+    }
+  pthread_join(tid,NULL);
+  pthread_join(tid1,NULL);
+  //pthread_join(tid2,NULL);
+  auto end_time = Clock::now();
+  //  cout << "Time difference:"
+    //     << chrono::duration_cast<chrono::nanoseconds>(end_time - start_time).count() << " nanoseconds" << endl;
+  int g;
+  g = getpid();
+  //cout << "pid " << g << endl;
+   string time = "/proc/" + to_string(g) + "/schedstat";
+   in.open(time);
+   string k = "";
+   in >> k;
+   cout <<"Time spent on the cpu " <<k << endl;
+   long start1 = stol(k);
+   in >>k;
+   cout <<"Time spent waiting on a runqueue " <<k << endl;
+   long end1 = stol(k);
+   
+   
+   in.close();
+   string ex = "/proc/" + to_string(g) + "/status";
+   in.open(ex);
+   string a = "";
+   while(a != "voluntary_ctxt_switches:")
+     {
+       //cout << a << endl;
+       in >> a;
+     }
+   
+   
+   in >> a;
+   
+   ctxt = stoi(a);
+  
+   in >> a;
+  
+   in >> a;
+   
+   ctxt = ctxt + stoi(a);
+   cout << "Context Switches " <<ctxt << endl;
+   cout << "Quantum: " << start1/ctxt << endl;
+   cout << "Context Switch Overhead: " << end1/ctxt << endl;
+   return 1;
+}
